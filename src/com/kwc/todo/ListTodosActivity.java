@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 import com.kwc.todo.db.TodoDataSource;
 
 import java.util.List;
@@ -42,7 +41,9 @@ public class ListTodosActivity extends Activity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getBaseContext(), (String) listView.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
+                datasource.deleteTodoItem(adapter.getItem(position));
+                adapter.remove(adapter.getItem(position));
+                adapter.notifyDataSetChanged();
             }
         });
         Button addButton = (Button) findViewById(R.id.addButton);

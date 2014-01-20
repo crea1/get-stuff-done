@@ -54,6 +54,11 @@ public class TodoDataSource {
         return todoItems;
     }
 
+    public void deleteTodoItem(TodoItem todoItem) {
+        Log.d(TodoDataSource.class.getName(), "Deleting todoitem with id = " + todoItem.getId());
+        database.delete(TABLE_TODOITEM, COLUMN_ID + " = " + todoItem.getId(), null);
+    }
+
     private TodoItem cursorToTodoItem(Cursor cursor) {
         TodoItem todoItem = new TodoItem();
         todoItem.setId(cursor.getLong(0));
