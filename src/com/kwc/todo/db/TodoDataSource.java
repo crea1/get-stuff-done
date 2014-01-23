@@ -11,8 +11,11 @@ import com.kwc.todo.TodoItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.kwc.todo.db.SQLiteHelper.COLUMN_CREATED_DATE;
 import static com.kwc.todo.db.SQLiteHelper.COLUMN_DETAILS;
+import static com.kwc.todo.db.SQLiteHelper.COLUMN_END_DATE;
 import static com.kwc.todo.db.SQLiteHelper.COLUMN_ID;
+import static com.kwc.todo.db.SQLiteHelper.COLUMN_PARENT_ID;
 import static com.kwc.todo.db.SQLiteHelper.COLUMN_TITLE;
 import static com.kwc.todo.db.SQLiteHelper.TABLE_TODOITEM;
 
@@ -22,7 +25,7 @@ import static com.kwc.todo.db.SQLiteHelper.TABLE_TODOITEM;
 public class TodoDataSource {
     private SQLiteHelper dbHelper;
     private SQLiteDatabase database;
-    private String[] allColumns = {COLUMN_ID, COLUMN_TITLE, COLUMN_DETAILS};
+    private String[] allColumns = {COLUMN_ID, COLUMN_TITLE, COLUMN_DETAILS, COLUMN_CREATED_DATE, COLUMN_END_DATE, COLUMN_PARENT_ID};
 
     public TodoDataSource(Context context) {
         dbHelper = new SQLiteHelper(context);
@@ -32,6 +35,9 @@ public class TodoDataSource {
         ContentValues values = new ContentValues();
         values.put(COLUMN_TITLE, todoItem.getTitle());
         values.put(COLUMN_DETAILS, todoItem.getDetails());
+        values.put(COLUMN_CREATED_DATE, todoItem.getCreatedDate());
+        values.put(COLUMN_END_DATE, todoItem.getEndDate());
+        values.put(COLUMN_PARENT_ID, todoItem.getParentId());
         long id = database.insert(TABLE_TODOITEM, null, values);
         Cursor cursor = database.query(TABLE_TODOITEM, allColumns, COLUMN_ID + " = " + id, null, null, null, null);
         cursor.moveToFirst();
