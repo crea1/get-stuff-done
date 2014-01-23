@@ -21,7 +21,7 @@ public class TodoItem {
     public TodoItem(String title, String details) {
         this.title = title;
         this.details = details;
-        this.createdDate = getDateTime();
+        this.createdDate = getDateTime(new Date());
     }
 
     public long getId() {
@@ -56,12 +56,20 @@ public class TodoItem {
         this.createdDate = createdDate;
     }
 
+    public void setCreatedDate(Date date) {
+        this.createdDate = getDateTime(date);
+    }
+
     public String getEndDate() {
         return endDate;
     }
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public void setEndDate(Date date) {
+        this.endDate = getDateTime(date);
     }
 
     public long getParentId() {
@@ -72,10 +80,9 @@ public class TodoItem {
         this.parentId = parentId;
     }
 
-    private String getDateTime() {
+    private String getDateTime(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        Date date = new Date();
         return dateFormat.format(date);
     }
 
@@ -83,4 +90,6 @@ public class TodoItem {
     public String toString() {
         return title;
     }
+
+
 }

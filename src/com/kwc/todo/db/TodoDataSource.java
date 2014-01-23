@@ -9,6 +9,7 @@ import android.util.Log;
 import com.kwc.todo.TodoItem;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.kwc.todo.db.SQLiteHelper.COLUMN_CREATED_DATE;
@@ -58,6 +59,13 @@ public class TodoDataSource {
         }
         cursor.close();
         return todoItems;
+    }
+
+    public void finishTodoItem(TodoItem todoItem) {
+        todoItem.setEndDate(new Date());
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_END_DATE, todoItem.getEndDate());
+        database.update(TABLE_TODOITEM, values, COLUMN_ID + " = " + todoItem.getId(), null);
     }
 
     public void deleteTodoItem(TodoItem todoItem) {
